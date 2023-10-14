@@ -1,20 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import HomeScreen from './app/StackScreen/HomeScreen';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MapScreen from './app/StackScreen/MapScreen';
 
+const Stack = createNativeStackNavigator()
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView className="flex-1 h-full w-full mt-6" >
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{headerShown:false}}>
+            <Stack.Screen name='homeScreen' component={HomeScreen} />
+            <Stack.Screen name='mapScreen' component={MapScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
